@@ -18,10 +18,13 @@ public class CharacterController : MonoBehaviour
     #endregion
 
 
-    Camera MainCamera;
-    Vector2 MovementDirection;
-    Vector2 AimDirection;
-    float CameraPitch;
+    Camera                  MainCamera;
+    Vector2                 MovementDirection;
+    Vector2                 AimDirection;
+    float                   CameraPitch;
+    bool                    isCrouching;
+    bool                    isInteracting;
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +41,7 @@ public class CharacterController : MonoBehaviour
 
         // Then move
         PerformMovement(MovementDirection);
+        PerformCrouching();
     }
 
     void PerformMovement(Vector2 direction)
@@ -45,7 +49,9 @@ public class CharacterController : MonoBehaviour
         if (direction.sqrMagnitude <= 0.01)
             return;
 
+        // Walk in the same direction as I'm looking
         var movement = Quaternion.Euler(0, gameObject.transform.eulerAngles.y, 0) * new Vector3(direction.x, 0, direction.y);
+        // Apply the movement tranformation
         gameObject.transform.position += movement * MovementSpeed * Time.deltaTime;
     }
 
@@ -54,9 +60,25 @@ public class CharacterController : MonoBehaviour
         if (rotation.sqrMagnitude <= 0.01)
             return;
 
+        // Rotate the player model, for the horizontal axis, as the camera is parented to this
         gameObject.transform.Rotate(Vector3.up, rotation.x * MouseXSensitivity * Time.deltaTime);
+        // Only pitch the camera when we look up or down --
+        //TODO: Look into head-only rotation to get the head to look up or down with the camera (Not that it's necessary with FPP)
         CameraPitch = Mathf.Clamp(CameraPitch - rotation.y * MouseYSensitivity * Time.deltaTime, -89, 89);
+
         MainCamera.transform.localEulerAngles = new Vector3(CameraPitch, 0, 0);
+    }
+
+    void PerformCrouching()
+    {
+        if (isCrouching)
+        {
+            
+        }
+        else
+        {
+            
+        }
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -69,8 +91,13 @@ public class CharacterController : MonoBehaviour
         AimDirection = context.ReadValue<Vector2>();
     }
 
-    public void Crouch()
+    public void Crouch(InputAction.CallbackContext context)
     {
+        isCrouching = context.ReadValue<float>() > 0.015;
+    }
 
+    public void Interact(InputAction.CallbackContext context)
+    {
+        isInteracting = context.ReadValue<float>() > 0.015;
     }
 }

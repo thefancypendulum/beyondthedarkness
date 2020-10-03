@@ -204,7 +204,7 @@ public class @PlayerInputScheme : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""97a784bf-37ba-43e7-8343-ec11a4c2d009"",
                     ""path"": ""<Keyboard>/ctrl"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Crouch"",
