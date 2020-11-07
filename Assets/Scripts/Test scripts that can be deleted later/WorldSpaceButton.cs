@@ -23,6 +23,7 @@ public class WorldSpaceButton : UICore
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = IdleSprite;
     }
     public override void OnHoverEnter()
     {
