@@ -23,7 +23,6 @@ public class CharacterController : MonoBehaviour
     Vector2                 AimDirection;
     float                   CameraPitch;
     bool                    isCrouching;
-    bool                    isInteracting;
 
 
     // Start is called before the first frame update
@@ -98,6 +97,6 @@ public class CharacterController : MonoBehaviour
 
     public void Interact(InputAction.CallbackContext context)
     {
-        isInteracting = context.ReadValue<float>() > 0.015;
+        
     }
 }
